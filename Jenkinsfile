@@ -16,10 +16,8 @@ pipeline{
     stage('Building image') {
         steps {
             script {
-                docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
-                    dockerImage = docker.build registry + ":latest"
-                }
-            }
+                  dockerImage = docker.build registry + ":latest"
+                 }
         }
     }
     stage('Deploying into k8s') {
