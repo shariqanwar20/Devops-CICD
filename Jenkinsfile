@@ -6,24 +6,25 @@ pipeline{
   }
   agent any
     stages {
-        stage('Build'){
-           steps{
-              script{
-                sh 'npm install'
-              } 
-           }   
+    stage('Build') {
+        steps {
+            script {
+                bat 'npm install'
+            }   
         }
-        stage('Building image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":latest"
-                    }
-                }
+    }
+    stage('Building image') {
+        steps {
+            script {
+                dockerImage = docker.build registry + ":latest"
             }
-        stage('Deploying into k8s'){
-        steps{
-            sh 'kubectl apply -f deployment.yml' 
         }
     }
+    stage('Deploying into k8s') {
+        steps {
+            bat 'kubectl apply -f deployment.yml'
+        }
     }
+}
+
 }
