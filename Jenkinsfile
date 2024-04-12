@@ -25,7 +25,7 @@ pipeline{
             steps {
                 script {
                         withCredentials([file(credentialsId: kubeconfigCredentialId, variable: 'KUBECONFIG')]) {
-                        bat 'kubectl apply -f ./k8s/deployment.yml'
+                        bat 'kubectl apply -f deployment.yml'
                     }
                 }
             }
