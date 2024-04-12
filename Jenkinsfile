@@ -2,6 +2,7 @@ pipeline{
   environment {
     registry = "shariqanwar20/iba-cicd"
     registryCredential = 'dockerhub'
+    kubeconfigCredentialId = "KUBECONFIG"
     dockerImage = ''
   }
   agent any
@@ -21,10 +22,14 @@ pipeline{
         }
     }
     stage('Deploying into k8s') {
-        steps {
-            bat 'kubectl apply -f deployment.yml'
+            steps {
+                script {
+                        withCredentials([file(credentialsId: kubeconfigCredentialId, variable: 'KUBECONFIG')]) {
+                        bat 'kubectl apply -f ./k8s/deployment.yml'
+                    }
+                }
+            }
         }
-    }
 }
 
 }
