@@ -9,6 +9,7 @@ pipeline{
         stage('Build'){
            steps{
               script{
+                sh 'cd application'
                 sh 'npm install'
               } 
            }   
@@ -16,14 +17,14 @@ pipeline{
         stage('Building image') {
             steps{
                 script {
-                  dockerImage = docker.build registry + ":latest"
-                 }
-             }
-          }
-           stage('Deploying into k8s'){
-            steps{
-                sh 'kubectl apply -f deployment.yml' 
+                    dockerImage = docker.build registry + ":latest"
+                    }
+                }
             }
+        stage('Deploying into k8s'){
+        steps{
+            sh 'kubectl apply -f ./k8/deployment.yml' 
         }
+    }
     }
 }
