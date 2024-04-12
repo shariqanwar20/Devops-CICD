@@ -16,7 +16,9 @@ pipeline{
     stage('Building image') {
         steps {
             script {
-                dockerImage = docker.build registry + ":latest"
+                docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
+                    dockerImage = docker.build registry + ":latest"
+                }
             }
         }
     }
