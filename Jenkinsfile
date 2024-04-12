@@ -9,7 +9,6 @@ pipeline{
         stage('Build'){
            steps{
               script{
-                sh 'cd application'
                 sh 'npm install'
               } 
            }   
@@ -23,7 +22,7 @@ pipeline{
             }
         stage('Deploying into k8s'){
         steps{
-            sh 'kubectl apply -f ./k8/deployment.yml' 
+            sh 'kubectl apply -f deployment.yml' 
         }
     }
     }
